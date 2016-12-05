@@ -1,0 +1,20 @@
+﻿@model WebApplication1.Models.Department
+
+
+@{
+    ViewBag.Title = "myHierarchy";
+}
+
+<h2>myHierarchy</h2>
+
+@if (@Model.subDept != null)
+{
+    if (@Model.subDept.Count() != 0)
+    {
+        foreach (WebApplication1.Models.Department dept in @Model.subDept)
+        {
+            @Html.Partial("_CreateDept", dept)
+        }
+    }
+}
+

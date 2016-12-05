@@ -1,0 +1,45 @@
+﻿@model WebApplication1.Models.Department
+
+
+<div  style="padding-left:10px;">
+
+    <p>@Model.name @Model.count  @Model.address @Model.depPhone</p>
+
+
+    @if ((@Model.employees != null) && (@Model.subDept == null))
+    {
+
+        foreach (WebApplication1.Models.Employee employ in @Model.employees)
+        {
+                @Html.Partial("_CreateEmp", employ)
+            }
+        
+    }
+
+
+
+    @if ((@Model.employees != null) && (@Model.subDept != null))
+    {
+        foreach (WebApplication1.Models.Department dept in @Model.subDept)
+            {
+                @Html.Partial("_CreateDept", dept)
+            }
+
+        foreach (WebApplication1.Models.Employee employ in @Model.employees)
+            {
+                @Html.Partial("_CreateEmp", employ)
+            }
+
+    }
+
+    @if ((@Model.employees == null) && (@Model.subDept != null))
+    {
+        foreach (WebApplication1.Models.Department dept in @Model.subDept)
+        {
+            @Html.Partial("_CreateDept", dept)
+        }
+
+    }
+
+
+</div>
