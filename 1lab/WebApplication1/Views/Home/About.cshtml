@@ -1,7 +1,36 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿
+@model WebApplication1.Models.User
+@{
+    ViewBag.Title = "Auth";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<h2>Auth</h2>
+
+@if (Model != null)
+{
+
+    if ((Model.login == "user") && (Model.password == "123"))
+    {
+        <p>Привет, @Model.login</p>
+    }
+}
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <form name="auth">
+     <input type="text" name="login" placeholder="Логин" /><br>
+     <input type="password" name="password" placeholder="Пароль" /><br>
+     <input type="submit" value="Войти" />
+    </form>
+}
+@if (Model != null) {
+
+    if ((Model.login == "user")&&(Model.password == "123"))
+    {
+        <p>Поздравляем, вы вошли в систему</p>
+    }
+    else
+    {
+        <p>Введите корректные данные, пожалуйста</p>
+    }
+}

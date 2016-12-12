@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
+using System.Web.Security;
 
 namespace WebApplication1.Controllers
 {
@@ -14,7 +15,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public ActionResult About()
+       public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
@@ -53,5 +54,28 @@ namespace WebApplication1.Controllers
             
             return View(dept1);
         }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult About(User modelUser)
+        {
+            if (ModelState.IsValid)
+            {
+                if (FormsAuthentication.Authenticate(modelUser.login, modelUser.password))
+                {
+                    FormsAuthentication.SetAuthCookie(modelUser.login, false);
+                    return View(modelUser);
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                }
+            }
+            return View(modelUser);
+        }
     }
+
+
+   
 }
